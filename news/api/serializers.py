@@ -26,3 +26,12 @@ class ArticleSerializer(serializers.Serializer):
         instance.publication_date = validated_data.get('publication_date', instance.publication_date)
         instance.save()
         return instance
+    def validate_object(self, data):
+        if data['title'] == data['description']:
+            raise serializers.ValidationError("Title and Description must be different from each other.")
+        return data
+    def validate_title(self, value):
+        if len(value) < 60:
+            raise serializers.ValidationError("This title cannot be less than 6O characters.")
+        return value
+    
