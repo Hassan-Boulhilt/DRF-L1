@@ -11,13 +11,13 @@ class ArticleSerializer(serializers.Serializer):
     location = serializers.CharField()
     publication_date = serializers.DateField()
     active = serializers.BooleanField()
-    create_at = serializers.DateTimeField(read_only=True)
+    created_at = serializers.DateTimeField(read_only=True)
     updated_at = serializers.DateTimeField(read_only=True)
 
     def create(self, validated_data):
         return Article.objects.create(**validated_data)
     def update(self, instance, validated_data):
-        instance.author = validated_data.get('author',instance.author)
+        instance.author = validated_data.get('author', instance.author)
         instance.title = validated_data.get('title', instance.title)
         instance.description = validated_data.get('description', instance.description)
         instance.body = validated_data.get('body', instance.body)
