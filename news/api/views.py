@@ -42,6 +42,7 @@ class Article_Detail_API_View(APIView):
 class Journalist_List_Create_API_View(APIView):
     def get(self, request):
         journalists = Journalist.objects.all()
+        # Add context to the serializer to use it with the HyperlinkedModelSerializer
         serializer = JournalistSerialzer(journalists, many=True, context={"request": request})
         return Response(serializer.data)
     def post(self, request):
