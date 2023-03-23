@@ -2,16 +2,18 @@ from datetime import datetime
 from django.utils.timesince import timesince
 
 from rest_framework import serializers
-from news.models import Article
+from news.models import Article, Journalist
 
 
 
 
 
+        
 class ArticleSerializer(serializers.ModelSerializer):
     
     time_since_publication = serializers.SerializerMethodField()
-    author = serializers.StringRelatedField()
+    # author = serializers.StringRelatedField()
+    # author = JournalistSerialzer(read_only=True)
     
     
     
@@ -27,6 +29,16 @@ class ArticleSerializer(serializers.ModelSerializer):
         now = datetime.now()
         time_delta = timesince(publication_date, now)
         return time_delta
+
+
+class JournalistSerialzer(serializers.ModelSerializer):
+    # articles = ArticleSerializer(many=True, read_only=True)
+    articles =  serializers.HyperlinkedRelatedField(many=True, read_only=True, view_name='article-detail')
+    
+    class Meta:
+        model = Journalist
+        fields = '__all__'  
+        
 
 # class ArticleSerializer(serializers.Serializer):
 #     id = serializers.IntegerField(read_only=True)
