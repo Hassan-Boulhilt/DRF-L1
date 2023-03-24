@@ -9,7 +9,7 @@ class JobOffer(models.Model):
     job_salary = models.IntegerField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-    job_avalaible = models.BooleanField(default=True)
+    job_available = models.BooleanField(default=True)
 
     def __str__(self):
-        return f"{self.title} {self.location}"
+        return f"{self.job_title} {self.job_location}"
